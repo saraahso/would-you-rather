@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authedUser";
 import {Link, Redirect} from 'react-router-dom'
+import {withRouter} from 'react-router'
 
 class Login extends Component {
  
@@ -18,6 +19,8 @@ class Login extends Component {
     if (username !== "") {
             dispatch(setAuthedUser(username))
             this.setState(() => ({isLogged: true}))
+            this.setState({value: event.target.value}, function () {
+            });
         }
   }
 	handleChange = (e) => {
@@ -26,12 +29,14 @@ class Login extends Component {
     }
   
   render(){
-    const {from} = this.props
-    const {isLogged} = this.state
+   
+	const {from} = this.props.location.state || {from: {pathname: '/'}}
 
-	if (isLogged) {
-      return <Redirect to='/'/>
-    }
+        const {isLogged} = this.state
+
+        if (isLogged) {
+            return <Redirect to={from}/>
+        }
 
     return (
       <div className='container mt-4'>
@@ -68,4 +73,4 @@ function mapStateToProps({users, authedUser}){
         username: authedUser
     }
 }
-export default connect(mapStateToProps)(Login)
+export default withRouter(connect(mapStateToProps)(Login))

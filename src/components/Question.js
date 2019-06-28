@@ -1,60 +1,58 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { handleAnswer } from '../actions/shared'
+import { handleQuestionAnswer } from '../actions/questions'
+import Poll from 'react-polls'
 
 class Question extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      answer: this.props.answer
-    }
-    this.changeOption = this.changeOption.bind(this)
-  }
 
-  changeOption (opt) {
-    const { dispatch, auth, question } = this.props
-    if (!this.state.answer) {
-      if (opt === 1) {
-        dispatch(handleAnswer(auth, question.id, 'optionOne'))
-        this.setState({ answer: 'optionOne' })
-      } else if (opt === 2) {
-        dispatch(handleAnswer(auth, question.id, 'optionTwo'))
-        this.setState({ answer: 'optionTwo' })
-      }
-    }
+  state = {
+    pollAnswers: [
+      { option: this.props.question.optionOne.text, votes: (this.props.question.optionOne.votes).length },
+      { option: this.props.question.optionTwo.text, votes: (this.props.question.optionTwo.votes).length }
+    ]
   }
-
-  render () {
-    const { question } = this.props
-    const { answer } = this.state
-    let cls = []
-    if (answer) {
-      if (answer === 'optionOne') {
-        cls = ['opt option-one selected', 'opt option-two']
-      } else if (answer === 'optionTwo') {
-        cls = ['opt option-one', 'opt option-two selected']
-      }
-    } else {
-      cls = ['opt option-one', 'opt option-two']
+	
+  handleVote = voteAnswer => {
+      const { pollAnswers } = this.state
+      const newPollAnswers = pollAnswers.map(answer => {
+        if (answer.option === voteAnswer) answer.votes++
+        return answer
+      })
+      this.setState({
+        pollAnswers: newPollAnswers
+      })
     }
-    return (
-      <div className="question">
-        <div className="q opt">Q.</div>
-        <div className="options">
-          <div className={cls[0]} onClick={() => this.changeOption(1)}>{question.optionOne.text}</div>
-          <div className={cls[1]} onClick={() => this.changeOption(2)}>{question.optionTwo.text}</div>
-        </div>
-        <Link to={'/questions/${question.id}'} className="opt more"></Link>
+
+  render(){
+    const { author, question } = this.props
+	const { pollAnswers } = this.state
+    
+	const pollQuestion = 'Would you rather'
+
+  	return (
+      <div className="card p-2">
+      	<div className="row">
+          <div className="col-12 col-md-5 justify-content-center">
+              <img src={author.avatarURL} className="img-fluid card-img-top"/>
+				<p className="text-center">{author.name}</p>
+          </div>
+          <div className="col-12 col-md-7">
+				<Poll question={pollQuestion} answers={pollAnswers} onVote={this.handleVote} />
+          </div>
+		</div>
       </div>
     )
   }
+  
 }
-
-function mapStateToProps ({ auth }) {
+function mapStateToProps({ authedUser, users, questions }, { id, answered }) {
+  const question = questions[id];
+  const author = question && question.author ? users[question.author] : null;
   return {
-    auth
-  }
+    authedUser,
+    question,
+    author,
+    answered
+  };
 }
-
 export default connect(mapStateToProps)(Question)
