@@ -39,12 +39,11 @@ class Login extends Component {
         }
 
     return (
-      <div className='container mt-4'>
-        <form className='form-signin' onSubmit={this.handleSubmit}>
-      		<h3>Would You Rather?</h3>
-      		<p className='text-secondary'>Please Sign in </p>
-            <label>User:</label>
-            <select className='form-control' id='username' 
+        <form className="bg-white rounded text-center form-signin pt-3 pb-4 mt-5" onSubmit={this.handleSubmit}>
+			<img src="http://grupormm.com.br/fotos/avatar/question.png" className="mb-4 logoLogin" />
+      		<h5 className="text-secondary text-left">Would you rather?</h5>
+            <p className="text-secondary text-left">Please choose your user to sign in</p>
+            <select className='form-control mb-2' id="username"
       			value={this.state.username}
 				onChange={this.handleChange}>
 				<option value='' disabled>Select</option>
@@ -54,10 +53,10 @@ class Login extends Component {
                         )}
                     </select>
             
-            <input className='btn btn-light mt-3' type="submit" value="Submit" />
-			<Link to="/register" className='float-right mt-3'>Sign Up</Link>
+			
+            	<input className="btn btn-info mt-3 btn-block" type="submit" value="Login" />
+			
         </form>
-      </div>
     )
   }
 }

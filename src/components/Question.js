@@ -11,33 +11,41 @@ class Question extends Component {
       { option: this.props.question.optionTwo.text, votes: (this.props.question.optionTwo.votes).length }
     ]
   }
+
 	
   handleVote = voteAnswer => {
       const { pollAnswers } = this.state
       const newPollAnswers = pollAnswers.map(answer => {
         if (answer.option === voteAnswer) answer.votes++
+
         return answer
+        
       })
       this.setState({
         pollAnswers: newPollAnswers
       })
+    
     }
 
   render(){
-    const { author, question } = this.props
+    const { author, question, authedUser, answeredQuestion } = this.props
 	const { pollAnswers } = this.state
-    
 	const pollQuestion = 'Would you rather'
 
+console.log(pollAnswers)
+
   	return (
-      <div className="card p-2">
+      <div className="card p-2 mx-auto">
       	<div className="row">
           <div className="col-12 col-md-5 justify-content-center">
               <img src={author.avatarURL} className="img-fluid card-img-top"/>
 				<p className="text-center">{author.name}</p>
           </div>
           <div className="col-12 col-md-7">
-				<Poll question={pollQuestion} answers={pollAnswers} onVote={this.handleVote} />
+{answeredQuestion
+ ? <Poll question={pollQuestion} answers={pollAnswers} vote={this.props.question.optionOne.text}  onVote={this.handleVote} />
+: <Poll question={pollQuestion} answers={pollAnswers}  onVote={this.handleVote} />
+}
           </div>
 		</div>
       </div>
@@ -45,14 +53,14 @@ class Question extends Component {
   }
   
 }
-function mapStateToProps({ authedUser, users, questions }, { id, answered }) {
+function mapStateToProps({ authedUser, users, questions }, { id, answeredQuestion }) {
   const question = questions[id];
   const author = question && question.author ? users[question.author] : null;
   return {
     authedUser,
     question,
     author,
-    answered
+    answeredQuestion
   };
 }
 export default connect(mapStateToProps)(Question)

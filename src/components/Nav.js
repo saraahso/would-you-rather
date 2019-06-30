@@ -22,7 +22,8 @@ class Nav extends Component {
    	return (<Redirect to="/login"/>)
    }
     return (
-      <div className='navbar navbar-expand-lg navbar-light bg-light'>
+      <div className='navbar navbar-expand-lg navbar-dark bg-dark'>
+     	<img src="http://grupormm.com.br/fotos/avatar/question.png" className="navbar-brand" />
         <ul className='navbar-nav'>
           <li className='nav-item'>
             <NavLink to='/' exact activeClassName='active' className='nav-link'>

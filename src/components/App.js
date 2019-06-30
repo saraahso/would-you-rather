@@ -16,20 +16,17 @@ class App extends Component {
   
   render() {
     const { authedUser } = this.props
-    console.log("---"+authedUser)
     return (
       <Router>
       	<Fragment>
           <LoadingBar className="loading-bar" />
-      		<div className='container-fluid p-0'>
+      		<div className='container-fluid p-0 m-0'>
             {this.props.loading === true ? (
               <Login />
             ) : (
-              <div>
                 <Switch>
                   <Route path="/" exact component={Dashboard} />
                 </Switch>
-              </div>
             )}
           </div>
 		</Fragment>
