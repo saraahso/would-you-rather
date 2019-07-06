@@ -43,10 +43,9 @@ class Leaderboard extends Component {
 }
 
 function mapStateToProps({ users, authedUser }) {
-	return {
-		users: Object.keys(users).sort((a,b) => (users[b].questions.length + Object.keys(users[b].answers).length) - (users[a].questions.length + Object.keys(users[a].answers).length)).map((user) => users[user]),
-		authedUser
-	}
+  return {
+    users: Object.keys(users).sort((a,b) => (users[b].questions.length + Object.keys(users[b].answers).length) - (users[a].questions.length + Object.keys(users[a].answers).length)).map((user) => users[user]),
+    authedUser
+  }
 }
-
 export default connect(mapStateToProps)(Leaderboard)
