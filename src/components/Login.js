@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authedUser";
-import {Link, Redirect} from 'react-router-dom'
+import { Redirect} from 'react-router-dom'
 import {withRouter} from 'react-router'
 
 class Login extends Component {
@@ -29,10 +29,8 @@ class Login extends Component {
     }
   
   render(){
-   
 	const {from} = this.props.location.state || {from: {pathname: '/'}}
-
-        const {isLogged} = this.state
+    const {isLogged} = this.state
 
         if (isLogged) {
             return <Redirect to={from}/>

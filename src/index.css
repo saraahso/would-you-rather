@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
 body {
   margin: 0px !important;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color:#f8f9fa !important;
 }
 
@@ -55,3 +57,5 @@ li {
   	height:100%;
 }
 
+.leaderboard{
+	min-height: 200px !important;}

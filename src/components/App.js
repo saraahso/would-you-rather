@@ -6,6 +6,8 @@ import './assets/App.css'
 import LoadingBar from 'react-redux-loading'
 import Dashboard from './Dashboard'
 import Login from './Login'
+import NewQuestion from './NewQuestion'
+import Leaderboard from './Leaderboard'
 
 
 class App extends Component {
@@ -15,7 +17,7 @@ class App extends Component {
   }
   
   render() {
-    const { authedUser } = this.props
+    
     return (
       <Router>
       	<Fragment>
@@ -26,6 +28,8 @@ class App extends Component {
             ) : (
                 <Switch>
                   <Route path="/" exact component={Dashboard} />
+				  <Route path="/newQuestion" exact component={NewQuestion} />
+				  <Route path="/leaderboard" exact component={Leaderboard} />
                 </Switch>
             )}
           </div>

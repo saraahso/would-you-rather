@@ -31,7 +31,7 @@ class Nav extends Component {
             </NavLink>
           </li>
           <li className='nav-item'>
-            <NavLink to='/new' activeClassName='active' className='nav-link'>
+            <NavLink to='/newQuestion' activeClassName='active' className='nav-link'>
               New Question
             </NavLink>
           </li>
